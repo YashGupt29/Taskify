@@ -11,12 +11,7 @@ generator client {
   provider = "prisma-client-js"
 }
 
-model Boarding {
-  id String @id @default(uuid())
-  title String
-}
-
-model Board{
+model Boarding{
 id            String   @id@default(uuid())
 orgId         String   
 title         String
@@ -27,7 +22,7 @@ imageUserName String   @db.Text
 imageLinkHtml String   @db.Text
 lists         List[]
 createdAt     DateTime @default(now())
-updatedAt     DateTime @default(now())
+updatedAt     DateTime @updatedAt
 
 }
 model List{
@@ -35,7 +30,7 @@ model List{
   title   String
   order   Int
   boardId String
-  board   Board @relation(fields:[boardId], references:[id],onDelete:Cascade)
+  board   Boarding @relation(fields:[boardId], references:[id],onDelete:Cascade)
   cards   Card[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
