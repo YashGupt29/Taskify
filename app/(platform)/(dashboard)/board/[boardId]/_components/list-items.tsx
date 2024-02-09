@@ -67,5 +67,3 @@ const ListItem = ({ data, index }: ListItemProps) => {
 };
 
 export default ListItem;
-
-//8.33.33
