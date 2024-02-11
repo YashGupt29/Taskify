@@ -5,7 +5,7 @@ import { InputType, ReturnType } from "./types";
 import { db } from "@/lib/db";
 import { revalidatePath } from "next/cache";
 import { createSafeAction } from "@/lib/create-safe-action";
-import { UpdateListOrder } from "./schema";
+import { UpdateCardOrder } from "./schema";
 
 const handler = async (data: InputType): Promise<ReturnType> => {
   const { userId, orgId } = auth();
@@ -15,30 +15,32 @@ const handler = async (data: InputType): Promise<ReturnType> => {
     };
   }
   const { items, boardId } = data;
-  let lists;
+  let cards;
   try {
-    const transaction = items.map((list) =>
-      db.list.update({
+    const transaction = items.map((card) =>
+      db.card.update({
         where: {
-          id: list.id,
-          board: {
-            orgId,
+          id: card.id,
+          list: {
+            board: {
+              orgId,
+            },
           },
         },
         data: {
-          order: list.order,
+          order: card.order,
+          listId: card.listId,
         },
       })
     );
-    lists = await db.$transaction(transaction);
+    cards = await db.$transaction(transaction);
   } catch (error) {
     return {
       error: "Failed to reorder",
     };
   }
   revalidatePath(`/board/${boardId}`);
-  return { data: lists };
+  return { data: cards };
 };
 
-export const updateListOrder = createSafeAction(UpdateListOrder, handler);
-//8.55.47
+export const updateCardOrder = createSafeAction(UpdateCardOrder, handler);
