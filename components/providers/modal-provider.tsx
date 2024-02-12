@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import CardModal from "../modals/card-modal";
+import { ProModal } from "../modals/pro-modal";
 
 const Modalprovider = () => {
   const [isMounted, setIsMounted] = useState(false);
@@ -14,6 +15,7 @@ const Modalprovider = () => {
   return (
     <>
       <CardModal />
+      <ProModal />
     </>
   );
 };
