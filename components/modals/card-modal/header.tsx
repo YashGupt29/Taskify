@@ -9,7 +9,6 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 import { useAction } from "@/hooks/use-action";
 import { updateCard } from "@/actions/update-card";
-import { exec } from "child_process";
 import { toast } from "sonner";
 
 interface HeaderProps {
@@ -23,6 +22,9 @@ export const Header = ({ data }: HeaderProps) => {
     onSuccess: (data) => {
       queryClient.invalidateQueries({
         queryKey: ["card", data.id],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ["audit-log", data.id],
       });
       toast.success(`Renamed to ${data.title}`);
       setTitle(data.title);
