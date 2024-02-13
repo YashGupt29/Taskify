@@ -19,7 +19,7 @@ const handler = async (data: InputType): Promise<ReturnType> => {
       error: "Unauthorized",
     };
   }
-  const settingsUrl = absoluteUrl(`/organizations/${orgId}`);
+  const settingsUrl = absoluteUrl(`/organization/${orgId}`);
   let url = "";
   try {
     const orgSubscription = await db.orgSubscription.findUnique({
